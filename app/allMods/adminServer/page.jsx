@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { FaFacebook, FaTwitter, FaAndroid } from "react-icons/fa";
 import toast from "react-hot-toast";
-const BASE_URL = "https://apkmods.onrender.com";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Page() {
   const [downloading, setDownloading] = useState(false);
