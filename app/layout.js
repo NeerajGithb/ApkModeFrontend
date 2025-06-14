@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbbar from "./components/Navbbar";
 import { Toaster } from "react-hot-toast";
-
+import RouteLoaderWrapper from "./components/RouteLoaderWrapper";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,7 +25,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbbar/>
-        {children}
+        <RouteLoaderWrapper>
+          {children}
+        </RouteLoaderWrapper>
         <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>

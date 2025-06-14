@@ -22,7 +22,6 @@ export default function Page() {
   const [progress, setProgress] = useState(0);
   const [apkSize, setApkSize] = useState(null);
   const [key, setKey] = useState("");
-  const [name, setName] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   const [telegramLink, setTelegramLink] = useState("")
   const [endTime, setEndTime] = useState(null);
@@ -71,7 +70,7 @@ export default function Page() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = name || "loader.apk";
+      a.download = "admin.apk";
       a.click();
       window.URL.revokeObjectURL(url);
     } catch (error) {
@@ -99,7 +98,6 @@ export default function Page() {
 
         setFileUrl(data.fileUrl); // ✅ Cloudinary URL
         setKey(data.key);
-        setName(data.name);
         setTelegramLink(data.telegramLink);
         setEndTime(new Date(data.expiresAt));
 
@@ -153,7 +151,7 @@ export default function Page() {
           {/* Text Info */}
           <div>
             <p className="text-sm font-semibold">
-              {name}
+              Admin Server Vip Loader 3.8.apk
             </p>
             <p className="text-xs text-gray-400">
               {apkSize ? `${apkSize} MB` : "Loading size..."}
@@ -171,7 +169,7 @@ export default function Page() {
         {/* Title */}
         <div className="flex items-center gap-2 text-green-400 font-semibold text-base">
           <MdCheckCircle className="text-green-400" size={20} />
-          {name.replace(/\.apk/gi, '')} (64 Bit)
+          Admin Server vip Bt Loader (3.8 - 64 Bit)
           <span className="text-green-400 text-xl">●</span>
         </div>
 
