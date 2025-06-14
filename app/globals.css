@@ -1,0 +1,13 @@
+@import "tailwindcss";
+/* In your globals.css or Tailwind config */
+@keyframes bounceSize {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.bounce-size {
+  animation: bounceSize 1s infinite;
+}
