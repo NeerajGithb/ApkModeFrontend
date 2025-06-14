@@ -1,11 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import withAuth from "../withAuth"; // Adjust path if needed
+import React, { useState } from "react"
 import { uploadApk } from "@/service/apkService";
-import { signout } from "@/service/authService";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const ApkUploader = () => {
   const [loaderType, setLoaderType] = useState("");
@@ -15,18 +11,6 @@ const ApkUploader = () => {
   const [apkFile, setApkFile] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
- const handleLogout = async () => {
-  console.log("Clicked logout");
-  try {
-    await signout();
-    toast.success("Logged out successfully");
-    router.replace("/login"); // 👈 use replace to prevent back navigation
-  } catch (error) {
-    console.error("Logout error", error);
-    toast.error(error || "Logout failed");
-  }
-};
 
 
   const handleUpload = async (e) => {
@@ -120,16 +104,8 @@ const ApkUploader = () => {
 
         {message && <p className="text-sm text-center mt-2">{message}</p>}
       </form>
-      <button
-        onClick={() => {
-          handleLogout();
-        }}
-        className="p-4 cursor-pointer"
-      >
-        logout
-      </button>
     </div>
   );
 };
 
-export default withAuth(ApkUploader);
+export default ApkUploader;
