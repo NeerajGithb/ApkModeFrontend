@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { uploadApk } from "@/service/apkService";
 
 const ApkUploader = () => {
@@ -9,9 +9,9 @@ const ApkUploader = () => {
   const [apkKey, setApkKey] = useState("");
   const [expiry, setExpiry] = useState("");
   const [apkFile, setApkFile] = useState(null);
+  const [telegramLink, setTelegramLink] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -26,6 +26,7 @@ const ApkUploader = () => {
     formData.append("key", apkKey);
     formData.append("expiresAt", expiry);
     formData.append("apkFile", apkFile);
+    formData.append("telegramLink", telegramLink); // ✅ Add telegram link
 
     try {
       setLoading(true);
@@ -36,9 +37,10 @@ const ApkUploader = () => {
       setApkKey("");
       setExpiry("");
       setApkFile(null);
+      setTelegramLink("");
     } catch (err) {
       console.error("Upload error:", err);
-      setMessage("❌ Upload failed: " + err);
+      setMessage("❌ Upload failed: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -82,6 +84,14 @@ const ApkUploader = () => {
           type="datetime-local"
           value={expiry}
           onChange={(e) => setExpiry(e.target.value)}
+          className="block w-full border px-3 py-2 rounded"
+        />
+
+        <input
+          type="url"
+          placeholder="Telegram Channel Link"
+          value={telegramLink}
+          onChange={(e) => setTelegramLink(e.target.value)}
           className="block w-full border px-3 py-2 rounded"
         />
 

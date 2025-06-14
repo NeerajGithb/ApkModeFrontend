@@ -23,102 +23,104 @@ export default function Page() {
   const [apkSize, setApkSize] = useState(null);
   const [key, setKey] = useState("");
   const [fileUrl, setFileUrl] = useState("");
+  const [telegramLink, setTelegramLink] = useState("")
   const [endTime, setEndTime] = useState(null);
   const [now, setNow] = useState(null);
   const [copied, setCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
   const letters1 = ["T", "R", "I", "A", "L"];
   const letters2 = ["K", "E", "Y"];
-const handleTextClick = async (textToCopy) => {
-  try {
-    await navigator.clipboard.writeText(textToCopy);
-    setCopied(true);
-    toast.success("Copied!");
-    setTimeout(() => setCopied(false), 2000);
-  } catch (err) {
-    toast.error("Failed to copy!");
-  }
-};
-
-const handleDownload = async () => {
-  setDownloading(true);
-  try {
-    const response = await fetch(fileUrl); // ✅ Direct Cloudinary URL
-    const contentLength = response.headers.get("content-length");
-
-    if (!response.ok || !contentLength) {
-      alert("Download failed");
-      setDownloading(false);
-      return;
-    }
-
-    const total = parseInt(contentLength, 10);
-    const reader = response.body.getReader();
-    let received = 0;
-    const chunks = [];
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      chunks.push(value);
-      received += value.length;
-      setProgress(Math.round((received / total) * 100));
-    }
-
-    const blob = new Blob(chunks);
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "admin.apk";
-    a.click();
-    window.URL.revokeObjectURL(url);
-  } catch (error) {
-    toast.error("Error downloading file");
-  }
-
-  setDownloading(false);
-  setProgress(0);
-};
-
-const getRemainingTime = () => {
-  const diff = endTime - now;
-  if (diff <= 0) return null;
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const secs = Math.floor((diff % (1000 * 60)) / 1000);
-  return `${hours}h ${mins}m ${secs}s`;
-};
-
-useEffect(() => {
-  const fetchData = async () => {
+  const handleTextClick = async (textToCopy) => {
     try {
-      const res = await fetch(`${BASE_URL}/api/apks/Moon`);
-      const data = await res.json();
-
-      setFileUrl(data.fileUrl); // ✅ Cloudinary URL
-      setKey(data.key);
-      setEndTime(new Date(data.expiresAt));
-
-      const head = await fetch(data.fileUrl, { method: "HEAD" }); // ✅ direct fetch
-      const contentLength = head.headers.get("content-length");
-      if (contentLength) {
-        const sizeInMB = (parseInt(contentLength) / (1024 * 1024)).toFixed(2);
-        setApkSize(sizeInMB);
-      }
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      toast.success("Copied!");
+      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      toast.error("Failed to fetch APK info");
+      toast.error("Failed to copy!");
     }
   };
 
-  fetchData();
-}, []);
+  const handleDownload = async () => {
+    setDownloading(true);
+    try {
+      const response = await fetch(fileUrl); // ✅ Direct Cloudinary URL
+      const contentLength = response.headers.get("content-length");
 
-useEffect(() => {
-  setMounted(true);
-  setNow(new Date());
-  const timer = setInterval(() => setNow(new Date()), 1000);
-  return () => clearInterval(timer);
-}, []);
+      if (!response.ok || !contentLength) {
+        alert("Download failed");
+        setDownloading(false);
+        return;
+      }
+
+      const total = parseInt(contentLength, 10);
+      const reader = response.body.getReader();
+      let received = 0;
+      const chunks = [];
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        received += value.length;
+        setProgress(Math.round((received / total) * 100));
+      }
+
+      const blob = new Blob(chunks);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "admin.apk";
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      toast.error("Error downloading file");
+    }
+
+    setDownloading(false);
+    setProgress(0);
+  };
+
+  const getRemainingTime = () => {
+    const diff = endTime - now;
+    if (diff <= 0) return null;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+    return `${hours}h ${mins}m ${secs}s`;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/api/apks/Moon`);
+        const data = await res.json();
+
+        setFileUrl(data.fileUrl); // ✅ Cloudinary URL
+        setKey(data.key);
+        setTelegramLink(data.telegramLink);
+        setEndTime(new Date(data.expiresAt));
+
+        const head = await fetch(data.fileUrl, { method: "HEAD" }); // ✅ direct fetch
+        const contentLength = head.headers.get("content-length");
+        if (contentLength) {
+          const sizeInMB = (parseInt(contentLength) / (1024 * 1024)).toFixed(2);
+          setApkSize(sizeInMB);
+        }
+      } catch (err) {
+        toast.error("Failed to fetch APK info");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
+    setNow(new Date());
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const features = [
     { text: "Brutal Aimbot 150m", tag: "SAFE" },
@@ -328,9 +330,14 @@ useEffect(() => {
         </div>
         <div className="space-y-2 overflow-hidden">
           <h1 className="text">Download Apk from Telegram 👇👇👇👇👇</h1>
-          <button className="w-full flex items-center justify-center px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-3xl text-white bg-green-500  hover:bg-green-600 transition-colors">
-            Download
-          </button>
+          <a
+            href={telegramLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer w-full flex items-center justify-center px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-3xl text-white bg-green-500 hover:bg-green-600 transition-colors"
+          >
+            Join Telegram
+          </a>
         </div>
       </div>
     </div>
