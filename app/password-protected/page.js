@@ -21,8 +21,8 @@ export default function PasswordProtected() {
     });
 
     if (res.ok) {
-      toast.success("Login Success!");;
-        router.push("/admin"); // ✅ Add delay before redirecting
+        toast.success("Login Success!");;
+        window.location.href = "/admin"
     } else {
       setError("Incorrect password. Try again.");
     }
