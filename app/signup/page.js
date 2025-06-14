@@ -16,7 +16,7 @@ const Signup = () => {
 
     try {
       const data = await signup(email, password); // returns { success, message, ... }
-      console.log('Signup response:', response); 
+      console.log('Signup response:', data); 
       if (data.success) {
         toast.success('Signup successful! You can now log in.');
         router.push('/login'); // redirect to login page

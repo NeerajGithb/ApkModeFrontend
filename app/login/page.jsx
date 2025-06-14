@@ -1,6 +1,7 @@
 "use client";
 
 import { signin } from "@/service/authService";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +10,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const handleSignup = ()=> {
+      router.push("/signup");
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -68,6 +72,12 @@ const Login = () => {
             Sign In
           </button>
         </form>
+      </div>
+      <div className="flex items-center gap-5">
+        <button 
+      onClick={()=>{handleSignup()}}
+      className="p-4"
+      >Signup</button>
       </div>
     </div>
   );
