@@ -11,7 +11,7 @@ export async function POST(req) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: undefined, // ✅ Session-based (No expiration date)
+      maxAge: undefined,
       expires: undefined,
       path: "/",
     });

@@ -24,7 +24,10 @@ const ApkUploader = () => {
     formData.append("loaderType", loaderType);
     formData.append("name", apkName);
     formData.append("key", apkKey);
-    formData.append("expiresAt", expiry);
+  
+    const utcExpiry = new Date(expiry); // just this!
+    formData.append("expiresAt", utcExpiry.toISOString());
+
     formData.append("apkFile", apkFile);
     formData.append("telegramLink", telegramLink); // ✅ Add telegram link
 

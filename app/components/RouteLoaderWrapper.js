@@ -9,13 +9,13 @@ export default function RouteLoaderWrapper({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    setLoading(true); // show loader on route change start
+    setLoading(true);
     const timeout = setTimeout(() => {
-      setLoading(false); // hide after slight delay (simulate real load)
-    }, 300); // adjust timing as needed
+      setLoading(false);
+    }, 400); 
 
     return () => clearTimeout(timeout);
-  }, [pathname]); // runs on every route change
+  }, [pathname]);
 
   return (
     <>
