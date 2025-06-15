@@ -9,17 +9,20 @@ export default function RouteLoaderWrapper({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Don't show loader on homepage
+    if (pathname === "/") return;
+
     setLoading(true);
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 400); 
+    }, 500); // Adjust as needed
 
     return () => clearTimeout(timeout);
   }, [pathname]);
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && pathname !== "/" && <Loader />}
       {children}
     </>
   );

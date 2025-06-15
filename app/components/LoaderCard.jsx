@@ -10,10 +10,10 @@ export default function LoaderCard({ loader, apk, index }) {
     <motion.div
       key={index}
       onClick={() => router.push(loader.link)}
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: 40 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="cursor-pointer flex items-center justify-between bg-[#273d52] p-3 rounded-lg shadow-md transition hover:scale-[1.01] hover:shadow-lg"
+      className="cursor-pointer flex items-center justify-between bg-[#273d52] p-3 rounded-lg shadow-md  hover:scale-[1.01] hover:shadow-lg"
     >
       <img
         src={loader.image}

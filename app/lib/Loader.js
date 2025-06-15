@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Loader as Spinner } from "lucide-react"; // Generic loading icon
 
-export default function Loader() {
+export default function Loader({ className = ""}) {
   const dotVariants = {
     hidden: { opacity: 0.3, scale: 0.5 },
     visible: (i) => ({
@@ -19,7 +19,7 @@ export default function Loader() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-xs">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-xs ${className}`}>
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
