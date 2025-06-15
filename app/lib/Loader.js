@@ -29,19 +29,6 @@ export default function Loader({ className = ""}) {
         <Spinner className="w-10 h-10 text-gray-600 animate-spin" />
       </motion.div>
 
-      {/* Dots Animation */}
-      <div className="flex space-x-2 mt-3">
-        {[0, 1, 2].map((index) => (
-          <motion.div
-            key={index}
-            className="w-3 h-3 bg-gray-600 rounded-full"
-            initial="hidden"
-            animate="visible"
-            custom={index}
-            variants={dotVariants}
-          />
-        ))}
-      </div>
     </div>
   );
 }
