@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbbar from "./components/Navbbar";
 import { Toaster } from "react-hot-toast";
 import RouteLoaderWrapper from "./components/RouteLoaderWrapper";
+import ForceBrowserRedirect from "./components/ForceBrowserRedirect";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         <ForceBrowserRedirect />
         <Navbbar/>
         <RouteLoaderWrapper>
           {children}
