@@ -93,7 +93,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/apks/Moon`);
+        const res = await fetch(`${BASE_URL}/api/apks/Viral`);
         const data = await res.json();
 
         setFileUrl(data.fileUrl); // ✅ Cloudinary URL

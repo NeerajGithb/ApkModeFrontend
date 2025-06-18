@@ -5,6 +5,8 @@ import { FaArrowDown } from "react-icons/fa";
 import { MdCheckCircle } from "react-icons/md";
 import { ImSpinner2 } from "react-icons/im";
 import { IoSettingsSharp } from "react-icons/io5";
+import { useParams } from "next/navigation";
+
 import {
   BadgeCheck,
   BellRing,
@@ -24,13 +26,16 @@ export default function Page() {
   const [key, setKey] = useState("");
   const [name, setName] = useState("");
   const [fileUrl, setFileUrl] = useState("");
-  const [telegramLink, setTelegramLink] = useState("")
+  const [telegramLink, setTelegramLink] = useState("");
   const [endTime, setEndTime] = useState(null);
   const [now, setNow] = useState(null);
   const [copied, setCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
   const letters1 = ["T", "R", "I", "A", "L"];
   const letters2 = ["K", "E", "Y"];
+
+  const params = useParams();
+  const loaderType = params?.loaderType;
   const handleTextClick = async (textToCopy) => {
     try {
       await navigator.clipboard.writeText(textToCopy);
@@ -92,9 +97,10 @@ export default function Page() {
   };
 
   useEffect(() => {
+    if (!loaderType) return;
     const fetchData = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/apks/Aimbot`);
+        const res = await fetch(`${BASE_URL}/api/apks/${loaderType}`);
         const data = await res.json();
 
         setFileUrl(data.fileUrl); // ✅ Cloudinary URL
@@ -115,7 +121,7 @@ export default function Page() {
     };
 
     fetchData();
-  }, []);
+  }, [loaderType]);
 
   useEffect(() => {
     setMounted(true);
@@ -152,9 +158,7 @@ export default function Page() {
 
           {/* Text Info */}
           <div>
-            <p className="text-sm font-semibold">
-              {name}
-            </p>
+            <p className="text-sm font-semibold">{name}</p>
             <p className="text-xs text-gray-400">
               {apkSize ? `${apkSize} MB` : "Loading size..."}
             </p>
@@ -171,7 +175,7 @@ export default function Page() {
         {/* Title */}
         <div className="flex items-center gap-2 text-green-400 font-semibold text-base">
           <MdCheckCircle className="text-green-400" size={20} />
-          {name.replace(/\.apk/gi, '')} (64 Bit)
+          {name.replace(/\.apk/gi, "")} (64 Bit)
           <span className="text-green-400 text-xl">●</span>
         </div>
 
