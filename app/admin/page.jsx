@@ -16,20 +16,25 @@ const ApkUploader = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    if (!apkFile || !apkKey || !expiry || !loaderType) {
-      return alert("All fields are required including loader type!");
+    if (!loaderType) {
+      return alert("Loader Type is required!");
     }
 
     const formData = new FormData();
     formData.append("loaderType", loaderType);
     formData.append("name", apkName);
     formData.append("key", apkKey);
-  
-    const utcExpiry = new Date(expiry); // just this!
-    formData.append("expiresAt", utcExpiry.toISOString());
 
-    formData.append("apkFile", apkFile);
-    formData.append("telegramLink", telegramLink); // ✅ Add telegram link
+    if (expiry) {
+      const utcExpiry = new Date(expiry);
+      formData.append("expiresAt", utcExpiry.toISOString());
+    }
+
+    if (apkFile) {
+      formData.append("apkFile", apkFile);
+    }
+
+    formData.append("telegramLink", telegramLink);
 
     try {
       setLoading(true);
@@ -48,6 +53,7 @@ const ApkUploader = () => {
       setLoading(false);
     }
   };
+
   return (
     <div>
       <form

@@ -7,11 +7,13 @@ import Loader from "./lib/Loader";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const loaders = [
-  { name: "Admin BT Loader 3.8", image: "/admin.jpeg", link: "/allMods/adminServer", loaderType: "Moon" },
+  { name: "Admin BT Loader 3.8", image: "/admin.jpeg", link: "/allMods/adminServer", loaderType: "Admin" },
   { name: "Var Paid Loader", image: "/war.jpeg", link: "/allMods/war", loaderType: "War" },
   { name: "Mars Vip Loader", image: "/mars.jpg", link: "/allMods/mars", loaderType: "Mars" },
+  { name: "Bat Loader", image: "/bat.jpeg", link: "/allMods/bat", loaderType: "Bat" },
   { name: "Star Official Vip", image: "/star.jpg", link: "/allMods/star", loaderType: "Star" },
   { name: "BGMI Loader Vip", image: "/bgmi.jpg", link: "/allMods/bgmi", loaderType: "Bgmi" },
+  { name: "KILL Loader Vip", image: "/kill.jpeg", link: "/allMods/kill", loaderType: "Kill" },
   { name: "Game x Server V2", image: "/xserver.jpeg", link: "/allMods/xserver", loaderType: "Xserver" },
 ];
 
